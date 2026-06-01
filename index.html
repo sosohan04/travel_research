@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>한 달 해외 여행지 추천</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero" aria-label="여행지 추천 시작 화면">
+        <div class="hero-media" aria-hidden="true"></div>
+        <div class="hero-content">
+          <p class="eyebrow">One Month Travel Finder</p>
+          <h1>한 달 해외 여행지 추천</h1>
+          <p class="hero-copy">
+            동행 형태, 예산, 여행 속도, 기후, 도시와 자연 취향을 바탕으로
+            당신에게 맞는 나라와 여행 스타일을 추천합니다.
+          </p>
+          <button class="primary-button" id="startButton" type="button">
+            진단 시작
+          </button>
+        </div>
+      </section>
+
+      <section class="quiz-panel" id="quizPanel" aria-live="polite">
+        <div class="quiz-topbar">
+          <div>
+            <p class="section-kicker" id="questionCategory">기본 정보</p>
+            <h2 id="questionTitle">질문을 불러오는 중입니다</h2>
+          </div>
+          <div class="progress-meter" aria-label="진행률">
+            <span id="progressLabel">0 / 0</span>
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="options-grid" id="optionsGrid"></div>
+
+        <div class="quiz-actions">
+          <button class="ghost-button" id="backButton" type="button">이전</button>
+          <button class="ghost-button" id="resetButton" type="button">처음부터</button>
+        </div>
+      </section>
+
+      <section class="result-panel hidden" id="resultPanel" aria-live="polite">
+        <div class="result-heading">
+          <p class="section-kicker">추천 결과</p>
+          <h2 id="resultTitle">당신에게 맞는 여행지</h2>
+          <p id="resultSummary"></p>
+        </div>
+
+        <div class="result-grid" id="resultGrid"></div>
+
+        <div class="insight-band">
+          <div>
+            <h3>당신의 여행 유형</h3>
+            <p id="typeDescription"></p>
+          </div>
+          <div>
+            <h3>한 달 여행 팁</h3>
+            <p id="travelTip"></p>
+          </div>
+        </div>
+
+        <div class="source-note">
+          추천 후보는 2026년 6월 기준 공개 여행 안전 정보, 관광 인프라 지표,
+          장기 체류 적합성을 참고해 구성했습니다. 실제 항공권, 비자, 안전 경보,
+          보험 조건은 출발 전에 다시 확인하세요.
+        </div>
+
+        <div class="quiz-actions">
+          <button class="primary-button" id="retakeButton" type="button">
+            다시 진단하기
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

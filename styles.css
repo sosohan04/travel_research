@@ -1,0 +1,416 @@
+:root {
+  color-scheme: light;
+  --ink: #17211f;
+  --muted: #66736f;
+  --line: #d9e0dc;
+  --paper: #fbfaf6;
+  --white: #ffffff;
+  --teal: #176b68;
+  --teal-dark: #0f4d4b;
+  --coral: #e16d55;
+  --gold: #d59d3f;
+  --green: #4f7d57;
+  --shadow: 0 22px 80px rgba(23, 33, 31, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, "Noto Sans KR", sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.hero {
+  position: relative;
+  min-height: 54vh;
+  display: flex;
+  align-items: center;
+  padding: 48px clamp(20px, 5vw, 72px);
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(251, 250, 246, 0.94), rgba(251, 250, 246, 0.7) 43%, rgba(251, 250, 246, 0.12)),
+    url("./assets/travel-planning.png") center / cover;
+}
+
+.hero-content {
+  position: relative;
+  max-width: 680px;
+}
+
+.eyebrow,
+.section-kicker {
+  margin: 0 0 10px;
+  color: var(--teal-dark);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  margin: 0;
+  max-width: 580px;
+  font-size: clamp(42px, 7vw, 78px);
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+
+.hero-copy {
+  max-width: 560px;
+  margin: 22px 0 30px;
+  color: #43504c;
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.primary-button,
+.ghost-button {
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.primary-button {
+  padding: 0 22px;
+  background: var(--teal);
+  color: var(--white);
+  font-weight: 800;
+  box-shadow: 0 12px 26px rgba(23, 107, 104, 0.25);
+}
+
+.primary-button:hover,
+.ghost-button:hover,
+.option-card:hover {
+  transform: translateY(-1px);
+}
+
+.ghost-button {
+  padding: 0 16px;
+  background: var(--white);
+  color: var(--ink);
+  border-color: var(--line);
+  font-weight: 700;
+}
+
+.quiz-panel,
+.result-panel {
+  width: min(1120px, calc(100% - 32px));
+  margin: 32px auto;
+}
+
+.quiz-panel {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: clamp(20px, 4vw, 34px);
+}
+
+.quiz-topbar {
+  display: grid;
+  grid-template-columns: 1fr minmax(180px, 260px);
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 24px;
+}
+
+.quiz-topbar h2,
+.result-heading h2 {
+  margin: 0;
+  font-size: clamp(25px, 3.4vw, 40px);
+  line-height: 1.18;
+  letter-spacing: 0;
+}
+
+.progress-meter {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.progress-track {
+  height: 10px;
+  overflow: hidden;
+  background: #edf0ed;
+  border-radius: 999px;
+}
+
+.progress-fill {
+  width: 0;
+  height: 100%;
+  background: var(--coral);
+  border-radius: inherit;
+  transition: width 220ms ease;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.option-card {
+  min-height: 112px;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 14px;
+  align-items: start;
+  width: 100%;
+  padding: 18px;
+  text-align: left;
+  background: #fcfcf8;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.option-card:focus-visible,
+.primary-button:focus-visible,
+.ghost-button:focus-visible {
+  outline: 3px solid rgba(225, 109, 85, 0.36);
+  outline-offset: 3px;
+}
+
+.option-card:hover {
+  border-color: rgba(23, 107, 104, 0.5);
+  box-shadow: 0 14px 32px rgba(23, 33, 31, 0.08);
+}
+
+.option-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: rgba(23, 107, 104, 0.1);
+  color: var(--teal-dark);
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.option-card strong {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 17px;
+}
+
+.option-card span {
+  color: var(--muted);
+  line-height: 1.55;
+  font-size: 14px;
+}
+
+.quiz-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.result-panel {
+  display: grid;
+  gap: 22px;
+}
+
+.result-heading {
+  display: grid;
+  gap: 10px;
+}
+
+.result-heading p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.country-card {
+  display: grid;
+  gap: 14px;
+  min-height: 100%;
+  padding: 20px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--teal);
+  border-radius: 8px;
+  box-shadow: 0 16px 42px rgba(23, 33, 31, 0.08);
+}
+
+.country-card:nth-child(2) {
+  border-top-color: var(--coral);
+}
+
+.country-card:nth-child(3) {
+  border-top-color: var(--gold);
+}
+
+.country-rank {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.country-card h3 {
+  margin: 0;
+  font-size: 25px;
+  letter-spacing: 0;
+}
+
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--teal-dark);
+  font-weight: 900;
+}
+
+.score-bar {
+  flex: 1;
+  height: 9px;
+  background: #edf0ed;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.score-bar span {
+  display: block;
+  height: 100%;
+  width: var(--score-width);
+  background: currentColor;
+}
+
+.country-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-list span {
+  padding: 7px 9px;
+  background: #f1f4f1;
+  border-radius: 8px;
+  color: #34413d;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.insight-band {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.insight-band > div,
+.source-note {
+  padding: 20px;
+  background: #edf4f0;
+  border: 1px solid #cddbd4;
+  border-radius: 8px;
+}
+
+.insight-band h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.insight-band p,
+.source-note {
+  margin: 0;
+  color: #43504c;
+  line-height: 1.7;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .hero {
+    min-height: 58vh;
+    align-items: flex-end;
+  }
+
+  .hero-media {
+    background:
+      linear-gradient(180deg, rgba(251, 250, 246, 0.6), rgba(251, 250, 246, 0.94) 60%),
+      url("./assets/travel-planning.png") center / cover;
+  }
+
+  .quiz-topbar,
+  .options-grid,
+  .result-grid,
+  .insight-band {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-actions {
+    flex-wrap: wrap;
+  }
+
+  .quiz-actions button {
+    flex: 1 1 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 34px 18px;
+  }
+
+  .hero-copy {
+    font-size: 16px;
+  }
+
+  .quiz-panel,
+  .result-panel {
+    width: min(100% - 20px, 1120px);
+    margin: 18px auto;
+  }
+
+  .option-card {
+    grid-template-columns: 1fr;
+  }
+}
