@@ -276,6 +276,7 @@ const els = {
   retakeButton: document.querySelector("#retakeButton"),
   resultTitle: document.querySelector("#resultTitle"),
   resultSummary: document.querySelector("#resultSummary"),
+  preferenceSummary: document.querySelector("#preferenceSummary"),
   resultGrid: document.querySelector("#resultGrid"),
   typeDescription: document.querySelector("#typeDescription"),
   travelTip: document.querySelector("#travelTip")
@@ -395,6 +396,40 @@ function objectParticle(word) {
   return hasFinalConsonant ? "을" : "를";
 }
 
+function formatBudget(budgetKrw) {
+  return budgetKrw ? `${budgetKrw.toLocaleString("ko-KR")}만원` : "미정 / 조정 가능";
+}
+
+function formatDuration(durationWeeks) {
+  return durationWeeks ? `${durationWeeks}주` : "기간 미정";
+}
+
+function formatRegion(region) {
+  return {
+    europe: "유럽",
+    southeastAsia: "동남아",
+    oceania: "호주 / 뉴질랜드",
+    any: "지역 제한 없음"
+  }[region] || "지역 제한 없음";
+}
+
+function getEstimatedCost(country, durationWeeks) {
+  const tripWeeks = durationWeeks || 4;
+  return Math.round((country.estimatedFourWeekCost * (tripWeeks / 4)) / 10) * 10;
+}
+
+function getBudgetFit(estimatedCost, budgetKrw) {
+  if (!budgetKrw) {
+    return { label: "예산 미정", className: "caution" };
+  }
+
+  const ratio = budgetKrw / estimatedCost;
+  if (ratio >= 1.15) return { label: "예산 내 여유", className: "" };
+  if (ratio >= 0.95) return { label: "예산 적정", className: "" };
+  if (ratio >= 0.75) return { label: "일부 조정 필요", className: "caution" };
+  return { label: "예산 초과 가능", className: "over" };
+}
+
 function renderResults() {
   const { ranked, bestType, userScores, tripPreference } = calculateResults();
   const top = ranked[0];
@@ -402,25 +437,48 @@ function renderResults() {
   els.resultPanel.classList.remove("hidden");
   els.resultTitle.textContent = `${top.name}${objectParticle(top.name)} 가장 추천합니다`;
   els.resultSummary.textContent = `${bestType.title} 성향과 선택한 지역, 기간, 예산을 함께 반영했습니다. 희망 조건 안에서 취향 점수가 높은 순서로 추천했습니다.`;
+  els.preferenceSummary.innerHTML = `
+    <div class="preference-item">
+      <span>희망 지역</span>
+      <strong>${formatRegion(tripPreference.region)}</strong>
+    </div>
+    <div class="preference-item">
+      <span>선택 기간</span>
+      <strong>${formatDuration(tripPreference.durationWeeks)}</strong>
+    </div>
+    <div class="preference-item">
+      <span>선택 예산</span>
+      <strong>${formatBudget(tripPreference.budgetKrw)}</strong>
+    </div>
+  `;
   els.typeDescription.textContent = bestType.description;
   els.travelTip.textContent = makeTravelTip(userScores, tripPreference);
-  els.resultGrid.innerHTML = ranked.map((country, index) => `
-    <article class="country-card">
-      <div class="country-rank">추천 ${index + 1}순위</div>
-      <h3>${country.name}</h3>
-      <div class="score-row">
-        <div class="score-bar" aria-hidden="true">
-          <span style="--score-width: ${country.score}%"></span>
+  els.resultGrid.innerHTML = ranked.map((country, index) => {
+    const estimatedCost = getEstimatedCost(country, tripPreference.durationWeeks);
+    const budgetFit = getBudgetFit(estimatedCost, tripPreference.budgetKrw);
+    return `
+      <article class="country-card">
+        <div class="country-rank">추천 ${index + 1}순위</div>
+        <h3>${country.name}</h3>
+        <div class="score-row">
+          <div class="score-bar" aria-hidden="true">
+            <span style="--score-width: ${country.score}%"></span>
+          </div>
+          <span>${country.score}점</span>
         </div>
-        <span>${country.score}점</span>
-      </div>
-      <p>${country.summary}</p>
-      <div class="tag-list">
-        ${country.tags.map((tag) => `<span>${tag}</span>`).join("")}
-      </div>
-      <p><strong>추천 설계:</strong> ${country.tip}</p>
-    </article>
-  `).join("");
+        <div class="cost-panel">
+          <span class="cost-label">${formatDuration(tripPreference.durationWeeks)} 기준 참고 예상비용</span>
+          <strong>약 ${formatBudget(estimatedCost)}</strong>
+          <span class="budget-fit ${budgetFit.className}">${budgetFit.label}</span>
+        </div>
+        <p>${country.summary}</p>
+        <div class="tag-list">
+          ${country.tags.map((tag) => `<span>${tag}</span>`).join("")}
+        </div>
+        <p><strong>추천 설계:</strong> ${country.tip}</p>
+      </article>
+    `;
+  }).join("");
   els.resultPanel.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 

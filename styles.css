@@ -255,6 +255,38 @@ h1 {
   line-height: 1.7;
 }
 
+.preference-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid #cddbd4;
+  border-radius: 8px;
+  background: #edf4f0;
+  overflow: hidden;
+}
+
+.preference-item {
+  min-width: 0;
+  padding: 16px 18px;
+  border-right: 1px solid #cddbd4;
+}
+
+.preference-item:last-child {
+  border-right: 0;
+}
+
+.preference-item span,
+.cost-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.preference-item strong {
+  font-size: 18px;
+}
+
 .result-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -322,6 +354,39 @@ h1 {
   line-height: 1.65;
 }
 
+.cost-panel {
+  display: grid;
+  gap: 7px;
+  padding: 13px;
+  background: #f5f7f5;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.cost-panel strong {
+  font-size: 17px;
+}
+
+.budget-fit {
+  width: fit-content;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: #dcece4;
+  color: #245b47;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.budget-fit.caution {
+  background: #fff0d7;
+  color: #865b14;
+}
+
+.budget-fit.over {
+  background: #f9e1dc;
+  color: #914331;
+}
+
 .tag-list {
   display: flex;
   flex-wrap: wrap;
@@ -382,8 +447,18 @@ h1 {
   .quiz-topbar,
   .options-grid,
   .result-grid,
+  .preference-summary,
   .insight-band {
     grid-template-columns: 1fr;
+  }
+
+  .preference-item {
+    border-right: 0;
+    border-bottom: 1px solid #cddbd4;
+  }
+
+  .preference-item:last-child {
+    border-bottom: 0;
   }
 
   .quiz-actions {
