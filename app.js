@@ -1,27 +1,37 @@
 const questions = [
   {
     category: "기본 정보",
-    title: "이번 한 달 여행은 누구와 함께 가나요?",
+    title: "어느 지역으로 여행을 가고 싶은가요?",
     options: [
-      { label: "혼자", detail: "일정과 속도를 자유롭게 정하고 싶어요.", icon: "1", weights: { solo: 3, flexible: 2, safety: 1 } },
-      { label: "연인 또는 친구", detail: "함께 즐길 거리와 분위기가 중요해요.", icon: "2", weights: { social: 3, food: 1, city: 1 } },
-      { label: "가족", detail: "안전하고 이동이 편한 곳이 좋아요.", icon: "3", weights: { family: 3, safety: 3, comfort: 2 } },
-      { label: "일행은 미정", detail: "현지에서 사람을 만나도 좋고 혼자도 괜찮아요.", icon: "4", weights: { solo: 1, social: 2, flexible: 2 } }
+      { label: "유럽", detail: "역사, 예술, 도시와 지중해 문화를 경험하고 싶어요.", icon: "EU", region: "europe", weights: { culture: 2, city: 1 } },
+      { label: "동남아", detail: "따뜻한 기후와 음식, 가성비 좋은 체류를 원해요.", icon: "SEA", region: "southeastAsia", weights: { warm: 2, budget: 2, food: 1 } },
+      { label: "호주 / 뉴질랜드", detail: "대자연, 로드트립과 야외 활동에 끌려요.", icon: "ANZ", region: "oceania", weights: { nature: 2, active: 1 } },
+      { label: "그외", detail: "지역을 정하지 않고 취향에 맞는 곳을 보고 싶어요.", icon: "ALL", region: "any", weights: { flexible: 2 } }
     ]
   },
   {
     category: "기본 정보",
-    title: "한 달 동안의 여행 예산은 어느 정도인가요?",
+    title: "여행 기간을 얼마나 하고 싶은가요?",
     options: [
-      { label: "절약형", detail: "숙소와 식비를 아껴 오래 머물고 싶어요.", icon: "$", weights: { budget: 3, asia: 2, slow: 1 } },
-      { label: "균형형", detail: "가끔 좋은 숙소와 식당도 즐기고 싶어요.", icon: "$$", weights: { balanced: 3, comfort: 1 } },
-      { label: "여유형", detail: "비용보다 경험의 질을 더 우선해요.", icon: "$$$", weights: { premium: 3, comfort: 2, culture: 1 } },
-      { label: "아직 미정", detail: "추천을 보고 예산을 조정할 수 있어요.", icon: "?", weights: { flexible: 2, balanced: 1 } }
+      { label: "2주", detail: "핵심 도시나 한 지역에 집중하고 싶어요.", icon: "2W", durationWeeks: 2, weights: { active: 1, city: 1 } },
+      { label: "4주", detail: "여러 도시와 휴식을 균형 있게 경험하고 싶어요.", icon: "4W", durationWeeks: 4, weights: { balanced: 2, slow: 1 } },
+      { label: "8주", detail: "현지 생활과 장기 체류를 깊게 경험하고 싶어요.", icon: "8W", durationWeeks: 8, weights: { slow: 2, local: 2, remote: 1 } },
+      { label: "그외", detail: "기간은 추천 결과를 보고 조정할 수 있어요.", icon: "?", durationWeeks: null, weights: { flexible: 2 } }
     ]
   },
   {
     category: "기본 정보",
-    title: "한 달 여행에서 숙소는 어떤 방식이 편한가요?",
+    title: "여행 비용 예산은 얼마인가요?",
+    options: [
+      { label: "500만원", detail: "항공, 숙박, 식비와 현지 이동을 포함한 총예산이에요.", icon: "5M", budgetKrw: 500, weights: { budget: 4 } },
+      { label: "1,000만원", detail: "비용과 편안함을 균형 있게 가져가고 싶어요.", icon: "10M", budgetKrw: 1000, weights: { balanced: 3, comfort: 1 } },
+      { label: "1,500만원", detail: "숙소와 특별한 경험에 여유 있게 사용하고 싶어요.", icon: "15M", budgetKrw: 1500, weights: { premium: 3, comfort: 2 } },
+      { label: "그외", detail: "아직 예산을 정하지 않았거나 직접 조정할 수 있어요.", icon: "?", budgetKrw: null, weights: { flexible: 2 } }
+    ]
+  },
+  {
+    category: "기본 정보",
+    title: "여행에서 숙소는 어떤 방식이 편한가요?",
     options: [
       { label: "한 도시에 오래", detail: "거점 하나를 잡고 동네처럼 지내고 싶어요.", icon: "A", weights: { slow: 3, local: 2, remote: 1 } },
       { label: "2~3개 도시 이동", detail: "무리하지 않게 여러 지역을 보고 싶어요.", icon: "B", weights: { balanced: 2, culture: 2, transport: 1 } },
@@ -81,7 +91,7 @@ const questions = [
   },
   {
     category: "활동",
-    title: "한 달 동안 꼭 해보고 싶은 활동은 무엇인가요?",
+    title: "여행 중 꼭 해보고 싶은 활동은 무엇인가요?",
     options: [
       { label: "박물관과 공연", detail: "예술, 역사, 공연장을 자주 가고 싶어요.", icon: "M", weights: { culture: 3, city: 1 } },
       { label: "트레킹과 액티비티", detail: "몸을 움직이고 풍경을 직접 보고 싶어요.", icon: "A", weights: { active: 3, nature: 2 } },
@@ -124,6 +134,9 @@ const questions = [
 const countries = [
   {
     name: "일본",
+    region: "other",
+    estimatedFourWeekCost: 650,
+    idealWeeks: [2, 4],
     tags: ["초보자 친화", "도시+자연", "음식"],
     weights: { safety: 4, comfort: 4, transport: 4, food: 4, culture: 4, city: 3, solo: 2, family: 3, seasonal: 3, balanced: 2 },
     summary: "교통, 치안, 음식, 계절감이 강해 첫 한 달 해외여행이나 가족 여행에도 안정적입니다. 도쿄와 교토를 거점으로 지방 소도시를 섞기 좋습니다.",
@@ -131,6 +144,9 @@ const countries = [
   },
   {
     name: "포르투갈",
+    region: "europe",
+    estimatedFourWeekCost: 750,
+    idealWeeks: [4, 8],
     tags: ["느린 여행", "해변", "카페"],
     weights: { safety: 4, mild: 4, slow: 4, city: 3, beach: 3, food: 3, remote: 3, culture: 3, solo: 2, balanced: 2 },
     summary: "리스본, 포르투, 남부 해변을 천천히 연결하기 좋고 한 달 체류 리듬이 부드럽습니다. 도시 생활과 바다 휴식의 균형이 좋습니다.",
@@ -138,6 +154,9 @@ const countries = [
   },
   {
     name: "태국",
+    region: "southeastAsia",
+    estimatedFourWeekCost: 400,
+    idealWeeks: [4, 8],
     tags: ["가성비", "휴양", "원격근무"],
     weights: { budget: 4, asia: 4, warm: 4, beach: 4, food: 4, remote: 3, social: 3, slow: 3, comfort: 2, adventure: 2 },
     summary: "방콕의 도시 에너지, 치앙마이의 장기 체류 인프라, 남부 섬의 휴양을 조합하기 좋습니다. 예산 대비 체류 만족도가 높습니다.",
@@ -145,6 +164,9 @@ const countries = [
   },
   {
     name: "스페인",
+    region: "europe",
+    estimatedFourWeekCost: 800,
+    idealWeeks: [2, 4],
     tags: ["문화", "도시 산책", "음식"],
     weights: { culture: 4, food: 4, city: 4, social: 3, mild: 3, beach: 2, active: 2, balanced: 3, transport: 2 },
     summary: "마드리드, 바르셀로나, 세비야, 발렌시아처럼 성격이 다른 도시를 연결하기 좋습니다. 미술관, 건축, 음식 중심 여행에 강합니다.",
@@ -152,6 +174,9 @@ const countries = [
   },
   {
     name: "이탈리아",
+    region: "europe",
+    estimatedFourWeekCost: 900,
+    idealWeeks: [2, 4],
     tags: ["역사", "미식", "예술"],
     weights: { culture: 5, food: 4, city: 3, seasonal: 3, slow: 2, premium: 2, social: 1, transport: 2 },
     summary: "로마, 피렌체, 볼로냐, 남부 해안까지 한 달을 채워도 깊이가 남습니다. 역사와 예술을 좋아할수록 만족도가 큽니다.",
@@ -159,6 +184,9 @@ const countries = [
   },
   {
     name: "뉴질랜드",
+    region: "oceania",
+    estimatedFourWeekCost: 1000,
+    idealWeeks: [4, 8],
     tags: ["자연", "로드트립", "액티비티"],
     weights: { nature: 5, active: 4, safety: 4, comfort: 3, adventure: 3, mild: 2, solo: 1, family: 2, premium: 2 },
     summary: "풍경과 액티비티가 여행의 중심이라면 강력한 후보입니다. 남섬과 북섬을 나눠 천천히 이동하면 한 달이 알맞습니다.",
@@ -166,6 +194,9 @@ const countries = [
   },
   {
     name: "베트남",
+    region: "southeastAsia",
+    estimatedFourWeekCost: 350,
+    idealWeeks: [4, 8],
     tags: ["가성비", "현지감", "음식"],
     weights: { budget: 4, asia: 4, food: 4, local: 4, adventure: 3, warm: 3, city: 2, beach: 2, social: 2 },
     summary: "하노이, 다낭, 호이안, 호치민을 연결하며 음식과 생활감을 깊게 느끼기 좋습니다. 비용을 아끼며 긴 여행을 만들기 좋습니다.",
@@ -173,10 +204,23 @@ const countries = [
   },
   {
     name: "캐나다",
+    region: "other",
+    estimatedFourWeekCost: 1000,
+    idealWeeks: [4, 8],
     tags: ["안전", "대자연", "다문화"],
     weights: { safety: 4, nature: 4, comfort: 4, city: 3, family: 3, active: 3, mild: 2, premium: 3 },
     summary: "도시 편의와 국립공원 자연을 함께 원하는 사람에게 좋습니다. 밴쿠버, 토론토, 몬트리올처럼 분위기가 다른 도시를 고를 수 있습니다.",
     tip: "국토가 넓어 한 달이어도 지역을 좁히는 것이 중요합니다. 동부 또는 서부 중심으로 잡아야 여유가 생깁니다."
+  },
+  {
+    name: "호주",
+    region: "oceania",
+    estimatedFourWeekCost: 1100,
+    idealWeeks: [2, 4, 8],
+    tags: ["도시+자연", "로드트립", "해변"],
+    weights: { nature: 4, active: 3, safety: 3, comfort: 4, city: 3, beach: 4, warm: 2, social: 2, premium: 2 },
+    summary: "시드니와 멜버른의 도시 생활, 해안 드라이브와 광대한 자연을 함께 경험하기 좋습니다. 기간에 따라 한 지역 집중 또는 장거리 이동을 선택할 수 있습니다.",
+    tip: "도시 간 거리가 매우 길어 2주는 한 지역, 4주 이상은 국내선과 로드트립을 조합하는 편이 현실적입니다."
   }
 ];
 
@@ -272,36 +316,94 @@ function getScores() {
   }, {});
 }
 
+function getTripPreference() {
+  return state.answers.reduce((preference, answer) => ({
+    region: answer.region ?? preference.region,
+    durationWeeks: answer.durationWeeks ?? preference.durationWeeks,
+    budgetKrw: answer.budgetKrw ?? preference.budgetKrw
+  }), {
+    region: "any",
+    durationWeeks: null,
+    budgetKrw: null
+  });
+}
+
+function getRegionScore(country, preferredRegion) {
+  if (preferredRegion === "any") return 0;
+  return country.region === preferredRegion ? 48 : -42;
+}
+
+function getDurationScore(country, durationWeeks) {
+  if (!durationWeeks) return 0;
+  if (country.idealWeeks.includes(durationWeeks)) return 14;
+  const closestGap = Math.min(...country.idealWeeks.map((weeks) => Math.abs(weeks - durationWeeks)));
+  return closestGap <= 2 ? 5 : -8;
+}
+
+function getBudgetScore(country, durationWeeks, budgetKrw) {
+  if (!budgetKrw) return 0;
+  const tripWeeks = durationWeeks || 4;
+  const estimatedCost = country.estimatedFourWeekCost * (tripWeeks / 4);
+  const ratio = budgetKrw / estimatedCost;
+
+  if (ratio >= 1.15) return 22;
+  if (ratio >= 0.95) return 16;
+  if (ratio >= 0.75) return 3;
+  if (ratio >= 0.55) return -16;
+  return -34;
+}
+
 function calculateResults() {
   const userScores = getScores();
-  const maxScore = Math.max(...Object.values(userScores), 1);
+  const tripPreference = getTripPreference();
   const ranked = countries
     .map((country) => {
-      const rawScore = Object.entries(country.weights).reduce((sum, [key, weight]) => {
+      const preferenceScore = Object.entries(country.weights).reduce((sum, [key, weight]) => {
         return sum + (userScores[key] || 0) * weight;
       }, 0);
-      const normalized = Math.round(Math.min(98, 58 + (rawScore / (maxScore * 20)) * 40));
-      return { ...country, rawScore, score: normalized };
+      const countryWeightTotal = Object.values(country.weights).reduce((sum, weight) => sum + weight, 0);
+      const balancedPreferenceScore = preferenceScore / Math.sqrt(countryWeightTotal);
+      const fitScore =
+        getRegionScore(country, tripPreference.region) +
+        getDurationScore(country, tripPreference.durationWeeks) +
+        getBudgetScore(country, tripPreference.durationWeeks, tripPreference.budgetKrw);
+      const rawScore = balancedPreferenceScore + fitScore;
+      return { ...country, rawScore };
     })
     .sort((a, b) => b.rawScore - a.rawScore)
     .slice(0, 3);
+
+  const topRawScore = ranked[0].rawScore;
+  ranked.forEach((country, index) => {
+    const gap = topRawScore - country.rawScore;
+    country.score = Math.max(68, Math.round(96 - gap * 0.45 - index * 2));
+  });
 
   const bestType = typeProfiles
     .map((type) => ({ ...type, score: userScores[type.key] || 0 }))
     .sort((a, b) => b.score - a.score)[0];
 
-  return { ranked, bestType, userScores };
+  return { ranked, bestType, userScores, tripPreference };
+}
+
+function objectParticle(word) {
+  const lastChar = word.charCodeAt(word.length - 1);
+  const hasFinalConsonant =
+    lastChar >= 0xac00 &&
+    lastChar <= 0xd7a3 &&
+    (lastChar - 0xac00) % 28 !== 0;
+  return hasFinalConsonant ? "을" : "를";
 }
 
 function renderResults() {
-  const { ranked, bestType, userScores } = calculateResults();
+  const { ranked, bestType, userScores, tripPreference } = calculateResults();
   const top = ranked[0];
   els.quizPanel.classList.add("hidden");
   els.resultPanel.classList.remove("hidden");
-  els.resultTitle.textContent = `${top.name}을 가장 추천합니다`;
-  els.resultSummary.textContent = `${bestType.title} 성향이 강하게 나타났습니다. 한 달 여행이라면 이동을 너무 촘촘히 잡기보다, 머무는 도시의 생활 리듬과 근교 여행을 함께 설계하는 방식이 잘 맞습니다.`;
+  els.resultTitle.textContent = `${top.name}${objectParticle(top.name)} 가장 추천합니다`;
+  els.resultSummary.textContent = `${bestType.title} 성향과 선택한 지역, 기간, 예산을 함께 반영했습니다. 희망 조건 안에서 취향 점수가 높은 순서로 추천했습니다.`;
   els.typeDescription.textContent = bestType.description;
-  els.travelTip.textContent = makeTravelTip(userScores);
+  els.travelTip.textContent = makeTravelTip(userScores, tripPreference);
   els.resultGrid.innerHTML = ranked.map((country, index) => `
     <article class="country-card">
       <div class="country-rank">추천 ${index + 1}순위</div>
@@ -322,11 +424,17 @@ function renderResults() {
   els.resultPanel.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function makeTravelTip(scores) {
+function makeTravelTip(scores, tripPreference) {
+  if (tripPreference.durationWeeks === 8) {
+    return "8주 여행은 숙소를 2~3개 거점으로 나누고 장기 숙박 할인, 비자 체류 가능 기간, 여행자 보험 보장 기간을 먼저 확인하세요.";
+  }
+  if (tripPreference.durationWeeks === 2) {
+    return "2주 여행은 국가 수를 늘리기보다 핵심 도시 1~2곳과 근교를 묶는 편이 이동 손실을 줄이고 만족도를 높입니다.";
+  }
   if ((scores.remote || 0) >= 5) {
     return "숙소 예약 전 실제 와이파이 속도, 책상 유무, 세탁 접근성, 장기 숙박 할인을 확인하세요. 한 달 체류는 생활 편의가 만족도를 크게 좌우합니다.";
   }
-  if ((scores.family || 0) >= 4 || (scores.safety || 0) >= 7) {
+  if ((scores.safety || 0) >= 7) {
     return "이동 횟수를 줄이고 병원, 대중교통, 마트 접근성이 좋은 지역을 거점으로 잡으세요. 안전 경보와 여행자 보험 조건도 출발 전에 확인하는 편이 좋습니다.";
   }
   if ((scores.budget || 0) >= 5) {
@@ -335,7 +443,7 @@ function makeTravelTip(scores) {
   if ((scores.nature || 0) >= 5 || (scores.active || 0) >= 5) {
     return "자연 중심 여행은 날씨와 이동 시간이 변수입니다. 핵심 액티비티 사이에 회복일을 넣으면 한 달 전체의 컨디션이 안정됩니다.";
   }
-  return "초반 1주는 적응, 중반 2주는 핵심 경험, 마지막 1주는 여유와 재방문으로 나누면 한 달 여행이 덜 지치고 더 깊어집니다.";
+  return "여행 초반에는 적응 시간을 두고, 중반에 핵심 경험을 배치한 뒤 마지막에는 여유와 재방문 시간을 남겨두는 편이 좋습니다.";
 }
 
 function resetQuiz() {
