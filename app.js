@@ -183,6 +183,26 @@ const countries = [
     tip: "유명 도시는 붐비므로 큰 도시 2곳과 중소 도시 2곳을 섞으면 피로도가 낮아집니다."
   },
   {
+    name: "그리스",
+    region: "europe",
+    estimatedFourWeekCost: 800,
+    idealWeeks: [2, 4],
+    tags: ["섬 여행", "역사", "휴양"],
+    weights: { beach: 5, warm: 4, culture: 3, nature: 3, slow: 3, food: 2, adventure: 2, social: 1 },
+    summary: "아테네의 고대 유적과 크레타, 낙소스 같은 섬의 바다와 휴식을 함께 즐기기 좋습니다. 따뜻한 기후와 자연 중심 여행에 잘 맞습니다.",
+    tip: "섬 이동은 페리 시간과 날씨 영향을 받으므로 방문 섬 수를 줄이고 각 섬에 충분히 머무는 편이 좋습니다."
+  },
+  {
+    name: "프랑스",
+    region: "europe",
+    estimatedFourWeekCost: 1050,
+    idealWeeks: [2, 4, 8],
+    tags: ["예술", "미식", "다양한 지역"],
+    weights: { culture: 5, food: 5, city: 4, premium: 4, comfort: 3, transport: 3, seasonal: 2, slow: 2 },
+    summary: "파리의 예술과 미식부터 남프랑스, 알자스, 노르망디까지 지역별 분위기가 뚜렷합니다. 문화 경험과 여행의 질을 중시할 때 적합합니다.",
+    tip: "파리 체류 비중을 줄이고 지역 열차로 중소도시를 연결하면 예산과 여행 밀도를 함께 조절할 수 있습니다."
+  },
+  {
     name: "뉴질랜드",
     region: "oceania",
     estimatedFourWeekCost: 1000,
@@ -201,6 +221,26 @@ const countries = [
     weights: { budget: 4, asia: 4, food: 4, local: 4, adventure: 3, warm: 3, city: 2, beach: 2, social: 2 },
     summary: "하노이, 다낭, 호이안, 호치민을 연결하며 음식과 생활감을 깊게 느끼기 좋습니다. 비용을 아끼며 긴 여행을 만들기 좋습니다.",
     tip: "도시 간 이동 시간이 길 수 있어 야간 이동을 너무 많이 넣지 않는 편이 체력 관리에 좋습니다."
+  },
+  {
+    name: "말레이시아",
+    region: "southeastAsia",
+    estimatedFourWeekCost: 450,
+    idealWeeks: [2, 4, 8],
+    tags: ["생활 편의", "다문화 음식", "도시+자연"],
+    weights: { comfort: 4, food: 4, remote: 4, city: 3, safety: 3, nature: 2, beach: 2, budget: 2, warm: 3, balanced: 3 },
+    summary: "쿠알라룸푸르의 생활 편의와 페낭의 음식 문화, 보르네오의 자연을 함께 경험할 수 있습니다. 원격근무와 안정적인 장기 체류에 강합니다.",
+    tip: "도시 생활은 쿠알라룸푸르나 페낭을 거점으로 삼고 자연 여행은 짧은 국내선 일정으로 분리하면 편합니다."
+  },
+  {
+    name: "인도네시아",
+    region: "southeastAsia",
+    estimatedFourWeekCost: 450,
+    idealWeeks: [4, 8],
+    tags: ["섬 여행", "웰니스", "모험"],
+    weights: { beach: 5, nature: 4, warm: 4, adventure: 4, slow: 3, remote: 3, social: 2, budget: 2, active: 2 },
+    summary: "발리의 웰니스와 장기 체류 환경, 자바와 롬복의 자연과 모험을 조합하기 좋습니다. 휴양과 새로운 경험을 함께 원하는 여행자에게 맞습니다.",
+    tip: "섬 사이 이동에 시간이 들기 때문에 한 달에는 2~3개 지역만 선택하고 우기와 화산 활동 정보를 확인하세요."
   },
   {
     name: "캐나다",
@@ -357,7 +397,10 @@ function getBudgetScore(country, durationWeeks, budgetKrw) {
 function calculateResults() {
   const userScores = getScores();
   const tripPreference = getTripPreference();
-  const ranked = countries
+  const regionalCountries = tripPreference.region === "any"
+    ? countries
+    : countries.filter((country) => country.region === tripPreference.region);
+  const ranked = regionalCountries
     .map((country) => {
       const preferenceScore = Object.entries(country.weights).reduce((sum, [key, weight]) => {
         return sum + (userScores[key] || 0) * weight;
